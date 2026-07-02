@@ -78,3 +78,12 @@ Sprint 4 hides only the Help Center entry from the dashboard sidebar when MDS Wh
 - When `MDS_WHITE_LABEL_MODE=true`, the `HIDE_HELP_CENTER_MENU` feature is enabled through `mdsWhiteLabelFeatures.js`, and the sidebar omits only the top-level Help Center navigation entry.
 - Help Center routes, components, permissions, backend APIs, workers, Sidekiq, SSO, inboxes, conversations, messages, and databases are unchanged.
 - Captain remains controlled by the Sprint 3 `HIDE_CAPTAIN_MENU` feature, and no other sidebar sections are affected by this sprint.
+
+## Sprint 5 — Ocultar Campanhas
+
+Sprint 5 hides only the Campaigns entry from the dashboard sidebar when MDS White Label Mode is enabled.
+
+- The sidebar keeps the normal Campaigns menu unchanged when `MDS_WHITE_LABEL_MODE=false`.
+- When `MDS_WHITE_LABEL_MODE=true`, the `HIDE_CAMPAIGNS_MENU` feature is enabled through `mdsWhiteLabelFeatures.js`, and the sidebar omits only the top-level Campaigns navigation entry.
+- Campaign routes, components, permissions, backend APIs, workers, Sidekiq, SSO, inboxes, conversations, messages, and databases are unchanged.
+- Captain remains controlled by the Sprint 3 `HIDE_CAPTAIN_MENU` feature, Help Center remains controlled by the Sprint 4 `HIDE_HELP_CENTER_MENU` feature, and no other sidebar sections are affected by this sprint.
