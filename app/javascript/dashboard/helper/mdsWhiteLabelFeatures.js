@@ -3,11 +3,13 @@ import { isMdsWhiteLabelModeEnabled } from './mdsWhiteLabel';
 export const MDS_WHITE_LABEL_FEATURES = Object.freeze({
   FEATURES_ARCHITECTURE: 'featuresArchitecture',
   HIDE_CAPTAIN_MENU: 'hideCaptainMenu',
+  HIDE_HELP_CENTER_MENU: 'hideHelpCenterMenu',
 });
 
 const MDS_WHITE_LABEL_FEATURE_CONFIG = Object.freeze({
   [MDS_WHITE_LABEL_FEATURES.FEATURES_ARCHITECTURE]: true,
   [MDS_WHITE_LABEL_FEATURES.HIDE_CAPTAIN_MENU]: true,
+  [MDS_WHITE_LABEL_FEATURES.HIDE_HELP_CENTER_MENU]: true,
 });
 
 export const getMdsWhiteLabelFeatures = () => {

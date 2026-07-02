@@ -24,6 +24,7 @@ describe('mdsWhiteLabelFeatures helper', () => {
     expect(getMdsWhiteLabelFeatures()).toEqual({
       [MDS_WHITE_LABEL_FEATURES.FEATURES_ARCHITECTURE]: true,
       [MDS_WHITE_LABEL_FEATURES.HIDE_CAPTAIN_MENU]: true,
+      [MDS_WHITE_LABEL_FEATURES.HIDE_HELP_CENTER_MENU]: true,
     });
   });
 
@@ -48,6 +49,16 @@ describe('mdsWhiteLabelFeatures helper', () => {
 
     expect(
       isMdsWhiteLabelFeatureEnabled(MDS_WHITE_LABEL_FEATURES.HIDE_CAPTAIN_MENU)
+    ).toBe(true);
+  });
+
+  it('checks whether the Help Center menu should be hidden', () => {
+    window.chatwootConfig = { mdsWhiteLabelMode: 'true' };
+
+    expect(
+      isMdsWhiteLabelFeatureEnabled(
+        MDS_WHITE_LABEL_FEATURES.HIDE_HELP_CENTER_MENU
+      )
     ).toBe(true);
   });
 
