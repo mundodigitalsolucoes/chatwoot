@@ -329,6 +329,10 @@ const showCampaignsMenu = computed(
   () => !mdsWhiteLabelFeatures()[MDS_WHITE_LABEL_FEATURES.HIDE_CAMPAIGNS_MENU]
 );
 
+const showSettingsMenu = computed(
+  () => !mdsWhiteLabelFeatures()[MDS_WHITE_LABEL_FEATURES.HIDE_SETTINGS_MENU]
+);
+
 const menuItems = computed(() => {
   return [
     {
@@ -719,158 +723,162 @@ const menuItems = computed(() => {
           },
         ]
       : []),
-    {
-      name: 'Settings',
-      label: t('SIDEBAR.SETTINGS'),
-      icon: 'i-lucide-bolt',
-      children: [
-        {
-          name: 'Settings Account Settings',
-          label: t('SIDEBAR.ACCOUNT_SETTINGS'),
-          icon: 'i-lucide-briefcase',
-          to: accountScopedRoute('general_settings_index'),
-        },
-        // {
-        //   name: 'Settings Captain',
-        //   label: t('SIDEBAR.CAPTAIN_AI'),
-        //   icon: 'i-woot-captain',
-        //   to: accountScopedRoute('captain_settings_index'),
-        // },
-        {
-          name: 'Settings Agents',
-          label: t('SIDEBAR.AGENTS'),
-          icon: 'i-lucide-square-user',
-          to: accountScopedRoute('agent_list'),
-        },
-        {
-          name: 'Settings Teams',
-          label: t('SIDEBAR.TEAMS'),
-          icon: 'i-lucide-users',
-          activeOn: [
-            'settings_teams_list',
-            'settings_teams_new',
-            'settings_teams_finish',
-            'settings_teams_add_agents',
-            'settings_teams_show',
-            'settings_teams_edit',
-            'settings_teams_edit_members',
-            'settings_teams_edit_finish',
-          ],
-          to: accountScopedRoute('settings_teams_list'),
-        },
-        ...(hasAdvancedAssignment.value
-          ? [
+    ...(showSettingsMenu.value
+      ? [
+          {
+            name: 'Settings',
+            label: t('SIDEBAR.SETTINGS'),
+            icon: 'i-lucide-bolt',
+            children: [
               {
-                name: 'Settings Agent Assignment',
-                label: t('SIDEBAR.AGENT_ASSIGNMENT'),
-                icon: 'i-lucide-user-cog',
-                activeOn: [
-                  'assignment_policy_index',
-                  'agent_assignment_policy_index',
-                  'agent_assignment_policy_create',
-                  'agent_assignment_policy_edit',
-                  'agent_capacity_policy_index',
-                  'agent_capacity_policy_create',
-                  'agent_capacity_policy_edit',
-                ],
-                to: accountScopedRoute('assignment_policy_index'),
+                name: 'Settings Account Settings',
+                label: t('SIDEBAR.ACCOUNT_SETTINGS'),
+                icon: 'i-lucide-briefcase',
+                to: accountScopedRoute('general_settings_index'),
               },
-            ]
-          : []),
-        {
-          name: 'Settings Inboxes',
-          label: t('SIDEBAR.INBOXES'),
-          icon: 'i-lucide-inbox',
-          activeOn: [
-            'settings_inbox_list',
-            'settings_inbox_show',
-            'settings_inbox_new',
-            'settings_inbox_finish',
-            'settings_inboxes_page_channel',
-            'settings_inboxes_add_agents',
-          ],
-          to: accountScopedRoute('settings_inbox_list'),
-        },
-        {
-          name: 'Settings Labels',
-          label: t('SIDEBAR.LABELS'),
-          icon: 'i-lucide-tags',
-          to: accountScopedRoute('labels_list'),
-        },
-        {
-          name: 'Settings Custom Attributes',
-          label: t('SIDEBAR.CUSTOM_ATTRIBUTES'),
-          icon: 'i-lucide-code',
-          to: accountScopedRoute('attributes_list'),
-        },
-        {
-          name: 'Settings Automation',
-          label: t('SIDEBAR.AUTOMATION'),
-          icon: 'i-lucide-repeat',
-          to: accountScopedRoute('automation_list'),
-        },
-        {
-          name: 'Settings Agent Bots',
-          label: t('SIDEBAR.AGENT_BOTS'),
-          icon: 'i-lucide-bot',
-          to: accountScopedRoute('agent_bots'),
-        },
-        {
-          name: 'Settings Macros',
-          label: t('SIDEBAR.MACROS'),
-          icon: 'i-lucide-toy-brick',
-          to: accountScopedRoute('macros_wrapper'),
-        },
-        {
-          name: 'Settings Canned Responses',
-          label: t('SIDEBAR.CANNED_RESPONSES'),
-          icon: 'i-lucide-message-square-quote',
-          to: accountScopedRoute('canned_list'),
-        },
-        {
-          name: 'Settings Integrations',
-          label: t('SIDEBAR.INTEGRATIONS'),
-          icon: 'i-lucide-blocks',
-          to: accountScopedRoute('settings_applications'),
-        },
-        {
-          name: 'Settings Audit Logs',
-          label: t('SIDEBAR.AUDIT_LOGS'),
-          icon: 'i-lucide-briefcase',
-          to: accountScopedRoute('auditlogs_list'),
-        },
-        {
-          name: 'Settings Custom Roles',
-          label: t('SIDEBAR.CUSTOM_ROLES'),
-          icon: 'i-lucide-shield-plus',
-          to: accountScopedRoute('custom_roles_list'),
-        },
-        {
-          name: 'Settings Sla',
-          label: t('SIDEBAR.SLA'),
-          icon: 'i-lucide-clock-alert',
-          to: accountScopedRoute('sla_list'),
-        },
-        {
-          name: 'Conversation Workflow',
-          label: t('SIDEBAR.CONVERSATION_WORKFLOW'),
-          icon: 'i-lucide-workflow',
-          to: accountScopedRoute('conversation_workflow_index'),
-        },
-        {
-          name: 'Settings Security',
-          label: t('SIDEBAR.SECURITY'),
-          icon: 'i-lucide-shield',
-          to: accountScopedRoute('security_settings_index'),
-        },
-        {
-          name: 'Settings Billing',
-          label: t('SIDEBAR.BILLING'),
-          icon: 'i-lucide-credit-card',
-          to: accountScopedRoute('billing_settings_index'),
-        },
-      ],
-    },
+              // {
+              //   name: 'Settings Captain',
+              //   label: t('SIDEBAR.CAPTAIN_AI'),
+              //   icon: 'i-woot-captain',
+              //   to: accountScopedRoute('captain_settings_index'),
+              // },
+              {
+                name: 'Settings Agents',
+                label: t('SIDEBAR.AGENTS'),
+                icon: 'i-lucide-square-user',
+                to: accountScopedRoute('agent_list'),
+              },
+              {
+                name: 'Settings Teams',
+                label: t('SIDEBAR.TEAMS'),
+                icon: 'i-lucide-users',
+                activeOn: [
+                  'settings_teams_list',
+                  'settings_teams_new',
+                  'settings_teams_finish',
+                  'settings_teams_add_agents',
+                  'settings_teams_show',
+                  'settings_teams_edit',
+                  'settings_teams_edit_members',
+                  'settings_teams_edit_finish',
+                ],
+                to: accountScopedRoute('settings_teams_list'),
+              },
+              ...(hasAdvancedAssignment.value
+                ? [
+                    {
+                      name: 'Settings Agent Assignment',
+                      label: t('SIDEBAR.AGENT_ASSIGNMENT'),
+                      icon: 'i-lucide-user-cog',
+                      activeOn: [
+                        'assignment_policy_index',
+                        'agent_assignment_policy_index',
+                        'agent_assignment_policy_create',
+                        'agent_assignment_policy_edit',
+                        'agent_capacity_policy_index',
+                        'agent_capacity_policy_create',
+                        'agent_capacity_policy_edit',
+                      ],
+                      to: accountScopedRoute('assignment_policy_index'),
+                    },
+                  ]
+                : []),
+              {
+                name: 'Settings Inboxes',
+                label: t('SIDEBAR.INBOXES'),
+                icon: 'i-lucide-inbox',
+                activeOn: [
+                  'settings_inbox_list',
+                  'settings_inbox_show',
+                  'settings_inbox_new',
+                  'settings_inbox_finish',
+                  'settings_inboxes_page_channel',
+                  'settings_inboxes_add_agents',
+                ],
+                to: accountScopedRoute('settings_inbox_list'),
+              },
+              {
+                name: 'Settings Labels',
+                label: t('SIDEBAR.LABELS'),
+                icon: 'i-lucide-tags',
+                to: accountScopedRoute('labels_list'),
+              },
+              {
+                name: 'Settings Custom Attributes',
+                label: t('SIDEBAR.CUSTOM_ATTRIBUTES'),
+                icon: 'i-lucide-code',
+                to: accountScopedRoute('attributes_list'),
+              },
+              {
+                name: 'Settings Automation',
+                label: t('SIDEBAR.AUTOMATION'),
+                icon: 'i-lucide-repeat',
+                to: accountScopedRoute('automation_list'),
+              },
+              {
+                name: 'Settings Agent Bots',
+                label: t('SIDEBAR.AGENT_BOTS'),
+                icon: 'i-lucide-bot',
+                to: accountScopedRoute('agent_bots'),
+              },
+              {
+                name: 'Settings Macros',
+                label: t('SIDEBAR.MACROS'),
+                icon: 'i-lucide-toy-brick',
+                to: accountScopedRoute('macros_wrapper'),
+              },
+              {
+                name: 'Settings Canned Responses',
+                label: t('SIDEBAR.CANNED_RESPONSES'),
+                icon: 'i-lucide-message-square-quote',
+                to: accountScopedRoute('canned_list'),
+              },
+              {
+                name: 'Settings Integrations',
+                label: t('SIDEBAR.INTEGRATIONS'),
+                icon: 'i-lucide-blocks',
+                to: accountScopedRoute('settings_applications'),
+              },
+              {
+                name: 'Settings Audit Logs',
+                label: t('SIDEBAR.AUDIT_LOGS'),
+                icon: 'i-lucide-briefcase',
+                to: accountScopedRoute('auditlogs_list'),
+              },
+              {
+                name: 'Settings Custom Roles',
+                label: t('SIDEBAR.CUSTOM_ROLES'),
+                icon: 'i-lucide-shield-plus',
+                to: accountScopedRoute('custom_roles_list'),
+              },
+              {
+                name: 'Settings Sla',
+                label: t('SIDEBAR.SLA'),
+                icon: 'i-lucide-clock-alert',
+                to: accountScopedRoute('sla_list'),
+              },
+              {
+                name: 'Conversation Workflow',
+                label: t('SIDEBAR.CONVERSATION_WORKFLOW'),
+                icon: 'i-lucide-workflow',
+                to: accountScopedRoute('conversation_workflow_index'),
+              },
+              {
+                name: 'Settings Security',
+                label: t('SIDEBAR.SECURITY'),
+                icon: 'i-lucide-shield',
+                to: accountScopedRoute('security_settings_index'),
+              },
+              {
+                name: 'Settings Billing',
+                label: t('SIDEBAR.BILLING'),
+                icon: 'i-lucide-credit-card',
+                to: accountScopedRoute('billing_settings_index'),
+              },
+            ],
+          },
+        ]
+      : []),
   ];
 });
 </script>
