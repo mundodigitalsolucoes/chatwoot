@@ -38,7 +38,7 @@ if (isMdsWhiteLabelModeEnabled()) {
 
 ### Arquitetura de Features
 
-Sprint 2 introduces a single feature-decision layer in `app/javascript/dashboard/helper/mdsWhiteLabelFeatures.js`.
+Sprint 2 is an incremental layer on top of the Sprint 1 flag plumbing and introduces a single feature-decision layer in `app/javascript/dashboard/helper/mdsWhiteLabelFeatures.js`.
 
 All future UI decisions for MDS White Label Mode should read from `mdsWhiteLabelFeatures()` instead of adding scattered checks like `if (isMdsWhiteLabelModeEnabled())` throughout the dashboard.
 
