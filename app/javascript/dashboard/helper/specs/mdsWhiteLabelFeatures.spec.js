@@ -25,6 +25,7 @@ describe('mdsWhiteLabelFeatures helper', () => {
       [MDS_WHITE_LABEL_FEATURES.FEATURES_ARCHITECTURE]: true,
       [MDS_WHITE_LABEL_FEATURES.HIDE_CAPTAIN_MENU]: true,
       [MDS_WHITE_LABEL_FEATURES.HIDE_HELP_CENTER_MENU]: true,
+      [MDS_WHITE_LABEL_FEATURES.HIDE_CAMPAIGNS_MENU]: true,
     });
   });
 
@@ -58,6 +59,16 @@ describe('mdsWhiteLabelFeatures helper', () => {
     expect(
       isMdsWhiteLabelFeatureEnabled(
         MDS_WHITE_LABEL_FEATURES.HIDE_HELP_CENTER_MENU
+      )
+    ).toBe(true);
+  });
+
+  it('checks whether the Campaigns menu should be hidden', () => {
+    window.chatwootConfig = { mdsWhiteLabelMode: 'true' };
+
+    expect(
+      isMdsWhiteLabelFeatureEnabled(
+        MDS_WHITE_LABEL_FEATURES.HIDE_CAMPAIGNS_MENU
       )
     ).toBe(true);
   });
