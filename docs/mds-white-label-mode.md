@@ -34,11 +34,15 @@ if (isMdsWhiteLabelModeEnabled()) {
 }
 ```
 
+## Out of scope for Sprint 1
+
+This sprint intentionally does not change sidebar behavior, menus, routes, database schema, controllers, models, APIs, webhooks, SSO, workers, Sidekiq, permissions, inbox lifecycle, or branding.
+
 ## Sprint 2
 
 ### Arquitetura de Features
 
-Sprint 2 is an incremental layer on top of the Sprint 1 flag plumbing and introduces a single feature-decision layer in `app/javascript/dashboard/helper/mdsWhiteLabelFeatures.js`.
+Sprint 2 adds a single feature-decision layer in `app/javascript/dashboard/helper/mdsWhiteLabelFeatures.js` on top of the Sprint 1 flag plumbing.
 
 All future UI decisions for MDS White Label Mode should read from `mdsWhiteLabelFeatures()` instead of adding scattered checks like `if (isMdsWhiteLabelModeEnabled())` throughout the dashboard.
 
@@ -62,7 +66,3 @@ The current feature map is intentionally permissive in both normal mode and whit
 ```
 
 This means Sprint 2 creates the architecture for future feature visibility decisions without changing the product experience now.
-
-## Out of scope
-
-This mode intentionally does not change sidebar behavior, menus, layout, navigation, routes, database schema, controllers, models, APIs, webhooks, SSO, workers, Sidekiq, permissions, messages, inbox lifecycle, branding, or any user-facing behavior in this sprint.
