@@ -37,3 +37,28 @@ if (isMdsWhiteLabelModeEnabled()) {
 ## Out of scope for Sprint 1
 
 This sprint intentionally does not change sidebar behavior, menus, routes, database schema, controllers, models, APIs, webhooks, SSO, workers, Sidekiq, permissions, inbox lifecycle, or branding.
+
+## Sprint 2 — Arquitetura de Features
+
+Sprint 2 adds a frontend-only feature registry for future MDS white label behavior without changing the base Sprint 1 flag plumbing.
+
+- Feature keys live in `MDS_WHITE_LABEL_FEATURES` from `app/javascript/dashboard/helper/mdsWhiteLabelFeatures.js`.
+- `getMdsWhiteLabelFeatures()` returns the enabled MDS feature registry only when `isMdsWhiteLabelModeEnabled()` is enabled.
+- `isMdsWhiteLabelFeatureEnabled(featureName)` checks one registered feature and returns `false` when MDS White Label Mode is disabled or the feature key is not registered.
+
+Frontend code that needs Sprint 2 feature checks should import the feature helper instead of reading the registry directly:
+
+```js
+import {
+  isMdsWhiteLabelFeatureEnabled,
+  MDS_WHITE_LABEL_FEATURES,
+} from 'dashboard/helper/mdsWhiteLabelFeatures';
+
+if (
+  isMdsWhiteLabelFeatureEnabled(
+    MDS_WHITE_LABEL_FEATURES.FEATURES_ARCHITECTURE
+  )
+) {
+  // MDS white label feature behavior for future sprints.
+}
+```
