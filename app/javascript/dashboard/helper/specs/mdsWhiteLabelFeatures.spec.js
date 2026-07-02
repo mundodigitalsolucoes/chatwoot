@@ -1,5 +1,6 @@
 import {
   getMdsWhiteLabelFeatures,
+  mdsWhiteLabelFeatures,
   isMdsWhiteLabelFeatureEnabled,
   MDS_WHITE_LABEL_FEATURES,
 } from '../mdsWhiteLabelFeatures';
@@ -22,7 +23,14 @@ describe('mdsWhiteLabelFeatures helper', () => {
 
     expect(getMdsWhiteLabelFeatures()).toEqual({
       [MDS_WHITE_LABEL_FEATURES.FEATURES_ARCHITECTURE]: true,
+      [MDS_WHITE_LABEL_FEATURES.HIDE_CAPTAIN_MENU]: true,
     });
+  });
+
+  it('keeps mdsWhiteLabelFeatures as the visual decision helper', () => {
+    window.chatwootConfig = { mdsWhiteLabelMode: 'true' };
+
+    expect(mdsWhiteLabelFeatures()).toEqual(getMdsWhiteLabelFeatures());
   });
 
   it('checks whether a known feature is enabled', () => {
@@ -32,6 +40,14 @@ describe('mdsWhiteLabelFeatures helper', () => {
       isMdsWhiteLabelFeatureEnabled(
         MDS_WHITE_LABEL_FEATURES.FEATURES_ARCHITECTURE
       )
+    ).toBe(true);
+  });
+
+  it('checks whether the Captain menu should be hidden', () => {
+    window.chatwootConfig = { mdsWhiteLabelMode: 'true' };
+
+    expect(
+      isMdsWhiteLabelFeatureEnabled(MDS_WHITE_LABEL_FEATURES.HIDE_CAPTAIN_MENU)
     ).toBe(true);
   });
 

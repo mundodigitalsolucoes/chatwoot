@@ -55,10 +55,17 @@ import {
 } from 'dashboard/helper/mdsWhiteLabelFeatures';
 
 if (
-  isMdsWhiteLabelFeatureEnabled(
-    MDS_WHITE_LABEL_FEATURES.FEATURES_ARCHITECTURE
-  )
+  isMdsWhiteLabelFeatureEnabled(MDS_WHITE_LABEL_FEATURES.FEATURES_ARCHITECTURE)
 ) {
   // MDS white label feature behavior for future sprints.
 }
 ```
+
+## Sprint 3 — Ocultar Capitão
+
+Sprint 3 hides only the Captain entry from the dashboard sidebar when MDS White Label Mode is enabled.
+
+- The sidebar keeps the normal Captain menu unchanged when `MDS_WHITE_LABEL_MODE=false`.
+- When `MDS_WHITE_LABEL_MODE=true`, the `HIDE_CAPTAIN_MENU` feature is enabled through `mdsWhiteLabelFeatures.js`, and the sidebar omits only the top-level Captain navigation entry.
+- Captain routes, components, permissions, backend APIs, workers, Sidekiq, SSO, inboxes, conversations, messages, and databases are unchanged.
+- Other sidebar sections such as Conversations, Inbox, Contacts, Reports, Campaigns, Help Center, and Settings are not affected.

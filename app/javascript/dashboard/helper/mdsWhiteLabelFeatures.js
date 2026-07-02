@@ -2,10 +2,12 @@ import { isMdsWhiteLabelModeEnabled } from './mdsWhiteLabel';
 
 export const MDS_WHITE_LABEL_FEATURES = Object.freeze({
   FEATURES_ARCHITECTURE: 'featuresArchitecture',
+  HIDE_CAPTAIN_MENU: 'hideCaptainMenu',
 });
 
 const MDS_WHITE_LABEL_FEATURE_CONFIG = Object.freeze({
   [MDS_WHITE_LABEL_FEATURES.FEATURES_ARCHITECTURE]: true,
+  [MDS_WHITE_LABEL_FEATURES.HIDE_CAPTAIN_MENU]: true,
 });
 
 export const getMdsWhiteLabelFeatures = () => {
@@ -16,5 +18,7 @@ export const getMdsWhiteLabelFeatures = () => {
   return MDS_WHITE_LABEL_FEATURE_CONFIG;
 };
 
+export const mdsWhiteLabelFeatures = getMdsWhiteLabelFeatures;
+
 export const isMdsWhiteLabelFeatureEnabled = featureName =>
-  Boolean(getMdsWhiteLabelFeatures()[featureName]);
+  Boolean(mdsWhiteLabelFeatures()[featureName]);
