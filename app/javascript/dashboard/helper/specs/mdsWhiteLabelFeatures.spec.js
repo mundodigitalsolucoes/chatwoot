@@ -29,6 +29,7 @@ describe('mdsWhiteLabelFeatures helper', () => {
       [MDS_WHITE_LABEL_FEATURES.HIDE_SETTINGS_MENU]: true,
       [MDS_WHITE_LABEL_FEATURES.HIDE_USER_MENU_ITEMS]: true,
       [MDS_WHITE_LABEL_FEATURES.HIDE_PROFILE_SECURITY]: true,
+      [MDS_WHITE_LABEL_FEATURES.HIDE_CHATWOOT_LOGO]: true,
     });
   });
 
@@ -101,6 +102,14 @@ describe('mdsWhiteLabelFeatures helper', () => {
       isMdsWhiteLabelFeatureEnabled(
         MDS_WHITE_LABEL_FEATURES.HIDE_PROFILE_SECURITY
       )
+    ).toBe(true);
+  });
+
+  it('checks whether the Chatwoot logo should be hidden', () => {
+    window.chatwootConfig = { mdsWhiteLabelMode: 'true' };
+
+    expect(
+      isMdsWhiteLabelFeatureEnabled(MDS_WHITE_LABEL_FEATURES.HIDE_CHATWOOT_LOGO)
     ).toBe(true);
   });
 
