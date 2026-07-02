@@ -58,6 +58,9 @@ const isRTL = useMapGetter('accounts/isRTL');
 
 const { width: windowWidth } = useWindowSize();
 const isMobile = computed(() => windowWidth.value < 768);
+const showChatwootLogo = computed(
+  () => !mdsWhiteLabelFeatures()[MDS_WHITE_LABEL_FEATURES.HIDE_CHATWOOT_LOGO]
+);
 
 const accountId = useMapGetter('getCurrentAccountId');
 const currentUserId = useMapGetter('getCurrentUserID');
@@ -924,10 +927,12 @@ const menuItems = computed(() => {
           />
         </template>
         <template v-else>
-          <div class="grid flex-shrink-0 place-content-center size-6">
-            <Logo class="size-4" />
-          </div>
-          <div class="flex-shrink-0 w-px h-3 bg-n-strong" />
+          <template v-if="showChatwootLogo">
+            <div class="grid flex-shrink-0 place-content-center size-6">
+              <Logo class="size-4" />
+            </div>
+            <div class="flex-shrink-0 w-px h-3 bg-n-strong" />
+          </template>
           <SidebarAccountSwitcher
             class="flex-grow -mx-1 min-w-0"
             @show-create-account-modal="emit('showCreateAccountModal')"

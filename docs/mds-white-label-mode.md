@@ -116,3 +116,13 @@ Sprint 8 hides only the Chatwoot authentication-related blocks inside Profile Se
 - When `MDS_WHITE_LABEL_MODE=true`, the hidden blocks are Change Password and Access Token / API Token.
 - Preserved blocks include photo, name, display name, email, interface, language, signature, sending preferences, alerts, notifications, active sessions, and all other operator preferences.
 - When `MDS_WHITE_LABEL_MODE=false`, the Profile Settings screen remains unchanged and both security blocks continue to render.
+
+## Sprint 9 — Ocultar logo do Chatwoot na sidebar
+
+Sprint 9 hides only the Chatwoot logo icon rendered at the top-left of the main dashboard sidebar when MDS White Label Mode is enabled, while preserving the account switcher and the rest of the sidebar layout.
+
+- Objective: remove the Chatwoot visual identity icon from the sidebar header without replacing it with another logo or changing the visible account/company name.
+- Created feature: `HIDE_CHATWOOT_LOGO`, configured in `app/javascript/dashboard/helper/mdsWhiteLabelFeatures.js`.
+- When `MDS_WHITE_LABEL_MODE=true`, the top-left Chatwoot logo icon and its adjacent divider are hidden through `mdsWhiteLabelFeatures()`.
+- When `MDS_WHITE_LABEL_MODE=false`, the sidebar header remains unchanged and the Chatwoot logo continues to render.
+- No routes, backend code, APIs, authentication, SSO, database schema, workers, menus, or CRM sidebar behavior are changed by this sprint.
