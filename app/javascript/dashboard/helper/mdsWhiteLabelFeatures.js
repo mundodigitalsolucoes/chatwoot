@@ -5,6 +5,7 @@ export const MDS_WHITE_LABEL_FEATURES = Object.freeze({
   HIDE_CAPTAIN_MENU: 'hideCaptainMenu',
   HIDE_HELP_CENTER_MENU: 'hideHelpCenterMenu',
   HIDE_CAMPAIGNS_MENU: 'hideCampaignsMenu',
+  HIDE_SETTINGS_MENU: 'hideSettingsMenu',
 });
 
 const MDS_WHITE_LABEL_FEATURE_CONFIG = Object.freeze({
@@ -12,6 +13,7 @@ const MDS_WHITE_LABEL_FEATURE_CONFIG = Object.freeze({
   [MDS_WHITE_LABEL_FEATURES.HIDE_CAPTAIN_MENU]: true,
   [MDS_WHITE_LABEL_FEATURES.HIDE_HELP_CENTER_MENU]: true,
   [MDS_WHITE_LABEL_FEATURES.HIDE_CAMPAIGNS_MENU]: true,
+  [MDS_WHITE_LABEL_FEATURES.HIDE_SETTINGS_MENU]: true,
 });
 
 export const getMdsWhiteLabelFeatures = () => {

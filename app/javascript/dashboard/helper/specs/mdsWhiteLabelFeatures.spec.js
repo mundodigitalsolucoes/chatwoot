@@ -26,6 +26,7 @@ describe('mdsWhiteLabelFeatures helper', () => {
       [MDS_WHITE_LABEL_FEATURES.HIDE_CAPTAIN_MENU]: true,
       [MDS_WHITE_LABEL_FEATURES.HIDE_HELP_CENTER_MENU]: true,
       [MDS_WHITE_LABEL_FEATURES.HIDE_CAMPAIGNS_MENU]: true,
+      [MDS_WHITE_LABEL_FEATURES.HIDE_SETTINGS_MENU]: true,
     });
   });
 
@@ -70,6 +71,14 @@ describe('mdsWhiteLabelFeatures helper', () => {
       isMdsWhiteLabelFeatureEnabled(
         MDS_WHITE_LABEL_FEATURES.HIDE_CAMPAIGNS_MENU
       )
+    ).toBe(true);
+  });
+
+  it('checks whether the Settings menu should be hidden', () => {
+    window.chatwootConfig = { mdsWhiteLabelMode: 'true' };
+
+    expect(
+      isMdsWhiteLabelFeatureEnabled(MDS_WHITE_LABEL_FEATURES.HIDE_SETTINGS_MENU)
     ).toBe(true);
   });
 
