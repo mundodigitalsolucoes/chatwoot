@@ -6,6 +6,10 @@ import { useI18n } from 'vue-i18n';
 import Avatar from 'next/avatar/Avatar.vue';
 import SidebarProfileMenuStatus from './SidebarProfileMenuStatus.vue';
 import { FEATURE_FLAGS } from 'dashboard/featureFlags';
+import {
+  mdsWhiteLabelFeatures,
+  MDS_WHITE_LABEL_FEATURES,
+} from 'dashboard/helper/mdsWhiteLabelFeatures';
 
 import {
   DropdownContainer,
@@ -33,6 +37,10 @@ const accountId = useMapGetter('getCurrentAccountId');
 const globalConfig = useMapGetter('globalConfig/get');
 const isFeatureEnabledonAccount = useMapGetter(
   'accounts/isFeatureEnabledonAccount'
+);
+
+const showUserMenuItems = computed(
+  () => !mdsWhiteLabelFeatures()[MDS_WHITE_LABEL_FEATURES.HIDE_USER_MENU_ITEMS]
 );
 
 const showChatSupport = computed(() => {
@@ -65,7 +73,7 @@ const menuItems = computed(() => {
       },
     },
     {
-      show: true,
+      show: showUserMenuItems.value,
       showOnCustomBrandedInstance: true,
       label: t('SIDEBAR_ITEMS.PROFILE_SETTINGS'),
       icon: 'i-lucide-user-pen',
@@ -82,7 +90,7 @@ const menuItems = computed(() => {
       },
     },
     {
-      show: true,
+      show: showUserMenuItems.value,
       showOnCustomBrandedInstance: false,
       label: t('SIDEBAR_ITEMS.DOCS'),
       icon: 'i-lucide-book',
@@ -91,7 +99,7 @@ const menuItems = computed(() => {
       target: '_blank',
     },
     {
-      show: true,
+      show: showUserMenuItems.value,
       showOnCustomBrandedInstance: false,
       label: t('SIDEBAR_ITEMS.CHANGELOG'),
       icon: 'i-lucide-scroll-text',
@@ -109,7 +117,7 @@ const menuItems = computed(() => {
       target: '_blank',
     },
     {
-      show: true,
+      show: showUserMenuItems.value,
       showOnCustomBrandedInstance: true,
       label: t('SIDEBAR_ITEMS.LOGOUT'),
       icon: 'i-lucide-power',

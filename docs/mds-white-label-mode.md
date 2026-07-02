@@ -88,7 +88,6 @@ Sprint 5 hides only the Campaigns entry from the dashboard sidebar when MDS Whit
 - Campaign routes, components, permissions, backend APIs, workers, Sidekiq, SSO, inboxes, conversations, messages, and databases are unchanged.
 - Captain remains controlled by the Sprint 3 `HIDE_CAPTAIN_MENU` feature, Help Center remains controlled by the Sprint 4 `HIDE_HELP_CENTER_MENU` feature, and no other sidebar sections are affected by this sprint.
 
-
 ## Sprint 6 — Ocultar Configurações
 
 Sprint 6 hides only the Settings entry from the dashboard sidebar when MDS White Label Mode is enabled.
@@ -97,3 +96,13 @@ Sprint 6 hides only the Settings entry from the dashboard sidebar when MDS White
 - When `MDS_WHITE_LABEL_MODE=true`, the `HIDE_SETTINGS_MENU` feature is enabled through `mdsWhiteLabelFeatures.js`, and the sidebar omits only the top-level Settings navigation entry.
 - Settings routes, components, permissions, backend APIs, workers, Sidekiq, SSO, inboxes, conversations, messages, and databases are unchanged.
 - Captain remains controlled by the Sprint 3 `HIDE_CAPTAIN_MENU` feature, Help Center remains controlled by the Sprint 4 `HIDE_HELP_CENTER_MENU` feature, Campaigns remains controlled by the Sprint 5 `HIDE_CAMPAIGNS_MENU` feature, and no other sidebar sections are affected by this sprint.
+
+## Sprint 7 — Ocultar itens do menu do usuário
+
+Sprint 7 hides only Chatwoot-related and authentication-related items from the user profile menu when MDS White Label Mode is enabled, while preserving the useful operator controls in that menu.
+
+- The user profile menu remains unchanged when `MDS_WHITE_LABEL_MODE=false`.
+- When `MDS_WHITE_LABEL_MODE=true`, the `HIDE_USER_MENU_ITEMS` feature is enabled through `mdsWhiteLabelFeatures.js`.
+- The hidden items are Profile settings, Read documentation, Changelog, and Log out.
+- Availability, automatic offline, keyboard shortcuts, and appearance/theme controls remain visible and available to operators.
+- This sprint does not change the CRM red logout button, authentication behavior, routes, permissions, APIs, backend code, controllers, models, or database schema.
