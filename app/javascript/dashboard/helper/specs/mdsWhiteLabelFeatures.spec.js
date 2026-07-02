@@ -28,6 +28,7 @@ describe('mdsWhiteLabelFeatures helper', () => {
       [MDS_WHITE_LABEL_FEATURES.HIDE_CAMPAIGNS_MENU]: true,
       [MDS_WHITE_LABEL_FEATURES.HIDE_SETTINGS_MENU]: true,
       [MDS_WHITE_LABEL_FEATURES.HIDE_USER_MENU_ITEMS]: true,
+      [MDS_WHITE_LABEL_FEATURES.HIDE_PROFILE_SECURITY]: true,
     });
   });
 
@@ -89,6 +90,16 @@ describe('mdsWhiteLabelFeatures helper', () => {
     expect(
       isMdsWhiteLabelFeatureEnabled(
         MDS_WHITE_LABEL_FEATURES.HIDE_USER_MENU_ITEMS
+      )
+    ).toBe(true);
+  });
+
+  it('checks whether profile security blocks should be hidden', () => {
+    window.chatwootConfig = { mdsWhiteLabelMode: 'true' };
+
+    expect(
+      isMdsWhiteLabelFeatureEnabled(
+        MDS_WHITE_LABEL_FEATURES.HIDE_PROFILE_SECURITY
       )
     ).toBe(true);
   });

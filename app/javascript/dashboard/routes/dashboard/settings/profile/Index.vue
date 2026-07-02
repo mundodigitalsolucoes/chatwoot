@@ -1,4 +1,5 @@
 <script>
+import { computed } from 'vue';
 import { mapGetters } from 'vuex';
 import { useAlert } from 'dashboard/composables';
 import { useUISettings } from 'dashboard/composables/useUISettings';
@@ -27,6 +28,10 @@ import {
   ROLES,
   CONVERSATION_PERMISSIONS,
 } from 'dashboard/constants/permissions.js';
+import {
+  mdsWhiteLabelFeatures,
+  MDS_WHITE_LABEL_FEATURES,
+} from 'dashboard/helper/mdsWhiteLabelFeatures';
 
 export default {
   components: {
@@ -50,6 +55,10 @@ export default {
     const { isEditorHotKeyEnabled, updateUISettings } = useUISettings();
     const { currentFontSize, updateFontSize } = useFontSize();
     const { replaceInstallationName } = useBranding();
+    const showProfileSecurity = computed(
+      () =>
+        !mdsWhiteLabelFeatures()[MDS_WHITE_LABEL_FEATURES.HIDE_PROFILE_SECURITY]
+    );
 
     return {
       currentFontSize,
@@ -57,6 +66,7 @@ export default {
       isEditorHotKeyEnabled,
       updateUISettings,
       replaceInstallationName,
+      showProfileSecurity,
     };
   },
   data() {
@@ -294,7 +304,7 @@ export default {
       </div>
     </SectionLayout>
     <SectionLayout
-      v-if="!globalConfig.disableUserProfileUpdate"
+      v-if="showProfileSecurity && !globalConfig.disableUserProfileUpdate"
       with-border
       :title="$t('PROFILE_SETTINGS.FORM.PASSWORD_SECTION.TITLE')"
       description=""
@@ -337,6 +347,7 @@ export default {
       </SectionLayout>
     </Policy>
     <SectionLayout
+      v-if="showProfileSecurity"
       with-border
       :title="$t('PROFILE_SETTINGS.FORM.ACCESS_TOKEN.TITLE')"
       :description="
