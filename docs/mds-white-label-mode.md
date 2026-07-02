@@ -106,3 +106,13 @@ Sprint 7 hides only Chatwoot-related and authentication-related items from the u
 - The hidden items are Profile settings, Read documentation, Changelog, and Log out.
 - Availability, automatic offline, keyboard shortcuts, and appearance/theme controls remain visible and available to operators.
 - This sprint does not change the CRM red logout button, authentication behavior, routes, permissions, APIs, backend code, controllers, models, or database schema.
+
+## Sprint 8 — Ocultar segurança do perfil
+
+Sprint 8 hides only the Chatwoot authentication-related blocks inside Profile Settings when MDS White Label Mode is enabled, while preserving the rest of the operator profile preferences.
+
+- Objective: remove profile-level authentication controls from the Profile Settings UI without changing login, logout, API behavior, permissions, routes, backend code, controllers, models, or database schema.
+- Created feature: `HIDE_PROFILE_SECURITY`, configured in `app/javascript/dashboard/helper/mdsWhiteLabelFeatures.js`.
+- When `MDS_WHITE_LABEL_MODE=true`, the hidden blocks are Change Password and Access Token / API Token.
+- Preserved blocks include photo, name, display name, email, interface, language, signature, sending preferences, alerts, notifications, active sessions, and all other operator preferences.
+- When `MDS_WHITE_LABEL_MODE=false`, the Profile Settings screen remains unchanged and both security blocks continue to render.
