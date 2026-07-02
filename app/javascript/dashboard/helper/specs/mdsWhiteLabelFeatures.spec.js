@@ -27,6 +27,7 @@ describe('mdsWhiteLabelFeatures helper', () => {
       [MDS_WHITE_LABEL_FEATURES.HIDE_HELP_CENTER_MENU]: true,
       [MDS_WHITE_LABEL_FEATURES.HIDE_CAMPAIGNS_MENU]: true,
       [MDS_WHITE_LABEL_FEATURES.HIDE_SETTINGS_MENU]: true,
+      [MDS_WHITE_LABEL_FEATURES.HIDE_USER_MENU_ITEMS]: true,
     });
   });
 
@@ -79,6 +80,16 @@ describe('mdsWhiteLabelFeatures helper', () => {
 
     expect(
       isMdsWhiteLabelFeatureEnabled(MDS_WHITE_LABEL_FEATURES.HIDE_SETTINGS_MENU)
+    ).toBe(true);
+  });
+
+  it('checks whether Chatwoot and authentication user menu items should be hidden', () => {
+    window.chatwootConfig = { mdsWhiteLabelMode: 'true' };
+
+    expect(
+      isMdsWhiteLabelFeatureEnabled(
+        MDS_WHITE_LABEL_FEATURES.HIDE_USER_MENU_ITEMS
+      )
     ).toBe(true);
   });
 
