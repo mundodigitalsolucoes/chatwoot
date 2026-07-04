@@ -23,6 +23,10 @@ import ChannelIcon from 'next/icon/ChannelIcon.vue';
 import SidebarAccountSwitcher from './SidebarAccountSwitcher.vue';
 import Logo from 'next/icon/Logo.vue';
 import ComposeConversation from 'dashboard/components-next/NewConversation/ComposeConversation.vue';
+import {
+  mdsWhiteLabelFeatures,
+  MDS_WHITE_LABEL_FEATURES,
+} from 'dashboard/helper/mdsWhiteLabelFeatures';
 
 const props = defineProps({
   isMobileSidebarOpen: {
@@ -50,6 +54,34 @@ const isRTL = useMapGetter('accounts/isRTL');
 
 const { width: windowWidth } = useWindowSize();
 const isMobile = computed(() => windowWidth.value < 768);
+
+const mdsMenuFeatures = computed(() => mdsWhiteLabelFeatures());
+
+const showChatwootLogo = computed(
+  () => !mdsMenuFeatures.value[MDS_WHITE_LABEL_FEATURES.HIDE_CHATWOOT_LOGO]
+);
+
+const shouldShowMenuItem = item => {
+  const hiddenItems = new Set();
+
+  if (mdsMenuFeatures.value[MDS_WHITE_LABEL_FEATURES.HIDE_CAPTAIN_MENU]) {
+    hiddenItems.add('Captain');
+  }
+
+  if (mdsMenuFeatures.value[MDS_WHITE_LABEL_FEATURES.HIDE_CAMPAIGNS_MENU]) {
+    hiddenItems.add('Campaigns');
+  }
+
+  if (mdsMenuFeatures.value[MDS_WHITE_LABEL_FEATURES.HIDE_HELP_CENTER_MENU]) {
+    hiddenItems.add('Portals');
+  }
+
+  if (mdsMenuFeatures.value[MDS_WHITE_LABEL_FEATURES.HIDE_SETTINGS_MENU]) {
+    hiddenItems.add('Settings');
+  }
+
+  return !hiddenItems.has(item.name);
+};
 
 const accountId = useMapGetter('getCurrentAccountId');
 const isFeatureEnabledonAccount = useMapGetter(
@@ -222,7 +254,7 @@ const newReportRoutes = () => [
 const reportRoutes = computed(() => newReportRoutes());
 
 const menuItems = computed(() => {
-  return [
+  const items = [
     {
       name: 'Inbox',
       label: t('SIDEBAR.INBOX'),
@@ -721,6 +753,8 @@ const menuItems = computed(() => {
       ],
     },
   ];
+
+  return items.filter(shouldShowMenuItem);
 });
 </script>
 
@@ -759,10 +793,10 @@ const menuItems = computed(() => {
           />
         </template>
         <template v-else>
-          <div class="grid flex-shrink-0 place-content-center size-6">
+          <div v-if="showChatwootLogo" class="grid flex-shrink-0 place-content-center size-6">
             <Logo class="size-4" />
           </div>
-          <div class="flex-shrink-0 w-px h-3 bg-n-strong" />
+          <div v-if="showChatwootLogo" class="flex-shrink-0 w-px h-3 bg-n-strong" />
           <SidebarAccountSwitcher
             class="flex-grow -mx-1 min-w-0"
             @show-create-account-modal="emit('showCreateAccountModal')"
