@@ -14,6 +14,7 @@ import UserBasicDetails from './UserBasicDetails.vue';
 import MessageSignature from './MessageSignature.vue';
 import FontSize from './FontSize.vue';
 import UserLanguageSelect from './UserLanguageSelect.vue';
+import HotKeyCard from './HotKeyCard.vue';
 import ChangePassword from './ChangePassword.vue';
 import NotificationPreferences from './NotificationPreferences.vue';
 import AudioNotifications from './AudioNotifications.vue';
@@ -21,17 +22,15 @@ import SectionLayout from '../account/components/SectionLayout.vue';
 import BaseSettingsHeader from '../components/BaseSettingsHeader.vue';
 import AccessToken from './AccessToken.vue';
 import MfaSettingsCard from './MfaSettingsCard.vue';
-import ActiveSessions from './ActiveSessions.vue';
 import Policy from 'dashboard/components/policy.vue';
-import RadioCard from 'dashboard/components-next/radioCard/RadioCard.vue';
-import {
-  ROLES,
-  CONVERSATION_PERMISSIONS,
-} from 'dashboard/constants/permissions.js';
 import {
   mdsWhiteLabelFeatures,
   MDS_WHITE_LABEL_FEATURES,
 } from 'dashboard/helper/mdsWhiteLabelFeatures';
+import {
+  ROLES,
+  CONVERSATION_PERMISSIONS,
+} from 'dashboard/constants/permissions.js';
 
 export default {
   components: {
@@ -42,13 +41,12 @@ export default {
     UserProfilePicture,
     Policy,
     UserBasicDetails,
-    RadioCard,
+    HotKeyCard,
     ChangePassword,
     NotificationPreferences,
     AudioNotifications,
     AccessToken,
     MfaSettingsCard,
-    ActiveSessions,
     BaseSettingsHeader,
   },
   setup() {
@@ -280,31 +278,30 @@ export default {
       <div
         class="flex flex-col justify-between w-full gap-5 sm:gap-4 sm:flex-row"
       >
-        <RadioCard
+        <button
           v-for="hotKey in hotKeys"
-          :id="hotKey.key"
           :key="hotKey.key"
-          :label="hotKey.title"
-          :description="hotKey.description"
-          :is-active="isEditorHotKeyEnabled(hotKey.key)"
-          class="sm:flex-1"
-          @select="toggleHotKey"
+          class="px-0 reset-base w-full sm:flex-1 rounded-xl outline-1 outline"
+          :class="
+            isEditorHotKeyEnabled(hotKey.key)
+              ? 'outline-n-brand/30'
+              : 'outline-n-weak'
+          "
         >
-          <img
-            :src="hotKey.lightImage"
-            :alt="`Light themed image for ${hotKey.title}`"
-            class="block object-cover w-full dark:hidden"
+          <HotKeyCard
+            :key="hotKey.title"
+            :title="hotKey.title"
+            :description="hotKey.description"
+            :light-image="hotKey.lightImage"
+            :dark-image="hotKey.darkImage"
+            :active="isEditorHotKeyEnabled(hotKey.key)"
+            @click="toggleHotKey(hotKey.key)"
           />
-          <img
-            :src="hotKey.darkImage"
-            :alt="`Dark themed image for ${hotKey.title}`"
-            class="hidden object-cover w-full dark:block"
-          />
-        </RadioCard>
+        </button>
       </div>
     </SectionLayout>
     <SectionLayout
-      v-if="showProfileSecurity && !globalConfig.disableUserProfileUpdate"
+      v-if="!globalConfig.disableUserProfileUpdate && showProfileSecurity"
       with-border
       :title="$t('PROFILE_SETTINGS.FORM.PASSWORD_SECTION.TITLE')"
       description=""
@@ -318,13 +315,6 @@ export default {
       :description="$t('PROFILE_SETTINGS.FORM.SECURITY_SECTION.NOTE')"
     >
       <MfaSettingsCard />
-    </SectionLayout>
-    <SectionLayout
-      with-border
-      :title="$t('PROFILE_SETTINGS.FORM.SESSIONS_SECTION.TITLE')"
-      :description="$t('PROFILE_SETTINGS.FORM.SESSIONS_SECTION.NOTE')"
-    >
-      <ActiveSessions />
     </SectionLayout>
     <Policy :permissions="audioNotificationPermissions">
       <SectionLayout
