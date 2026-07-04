@@ -73,7 +73,7 @@ const menuItems = computed(() => {
       },
     },
     {
-      show: showUserMenuItems.value,
+      show: true,
       showOnCustomBrandedInstance: true,
       label: t('SIDEBAR_ITEMS.PROFILE_SETTINGS'),
       icon: 'i-lucide-user-pen',
