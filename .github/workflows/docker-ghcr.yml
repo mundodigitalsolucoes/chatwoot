@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - develop
+      - mds/v4.12.1-white-label
   workflow_dispatch:
 
 permissions:
@@ -35,7 +36,7 @@ jobs:
           file: docker/Dockerfile
           push: true
           tags: |
-            ghcr.io/mundodigitalsolucoes/chatwoot:develop
+            ghcr.io/mundodigitalsolucoes/chatwoot:v4.12.1-mds
             ghcr.io/mundodigitalsolucoes/chatwoot:${{ github.sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
