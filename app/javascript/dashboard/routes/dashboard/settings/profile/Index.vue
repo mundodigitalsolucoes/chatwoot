@@ -1,4 +1,5 @@
 <script>
+import { computed } from 'vue';
 import { mapGetters } from 'vuex';
 import { useAlert } from 'dashboard/composables';
 import { useUISettings } from 'dashboard/composables/useUISettings';
@@ -23,6 +24,10 @@ import MfaSettingsCard from './MfaSettingsCard.vue';
 import ActiveSessions from './ActiveSessions.vue';
 import Policy from 'dashboard/components/policy.vue';
 import RadioCard from 'dashboard/components-next/radioCard/RadioCard.vue';
+import {
+  mdsWhiteLabelFeatures,
+  MDS_WHITE_LABEL_FEATURES,
+} from 'dashboard/helper/mdsWhiteLabelFeatures';
 import {
   ROLES,
   CONVERSATION_PERMISSIONS,
@@ -50,6 +55,10 @@ export default {
     const { isEditorHotKeyEnabled, updateUISettings } = useUISettings();
     const { currentFontSize, updateFontSize } = useFontSize();
     const { replaceInstallationName } = useBranding();
+    const showProfileSecurity = computed(
+      () =>
+        !mdsWhiteLabelFeatures()[MDS_WHITE_LABEL_FEATURES.HIDE_PROFILE_SECURITY]
+    );
 
     return {
       currentFontSize,
@@ -57,6 +66,7 @@ export default {
       isEditorHotKeyEnabled,
       updateUISettings,
       replaceInstallationName,
+      showProfileSecurity,
     };
   },
   data() {
@@ -142,11 +152,11 @@ export default {
         await this.$store.dispatch('updateProfile', payload);
         alertMessage = successMessage;
 
-        return true; // return the value so that the status can be known
+        return true;
       } catch (error) {
         alertMessage = parseAPIErrorResponse(error) || errorMessage;
 
-        return false; // return the value so that the status can be known
+        return false;
       } finally {
         useAlert(alertMessage);
       }
@@ -315,7 +325,7 @@ export default {
       </div>
     </SectionLayout>
     <SectionLayout
-      v-if="!globalConfig.disableUserProfileUpdate"
+      v-if="!globalConfig.disableUserProfileUpdate && showProfileSecurity"
       with-border
       :title="$t('PROFILE_SETTINGS.FORM.PASSWORD_SECTION.TITLE')"
       description=""
@@ -358,6 +368,7 @@ export default {
       </SectionLayout>
     </Policy>
     <SectionLayout
+      v-if="showProfileSecurity"
       with-border
       :title="$t('PROFILE_SETTINGS.FORM.ACCESS_TOKEN.TITLE')"
       :description="accessTokenDescription"
