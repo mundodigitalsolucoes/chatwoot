@@ -5,6 +5,7 @@ import { LocalStorage } from 'shared/helpers/localStorage';
 import { mapGetters } from 'vuex';
 import { useAdmin } from 'dashboard/composables/useAdmin';
 import { hasAnUpdateAvailable } from './versionCheckHelper';
+import { isMdsWhiteLabelFeatureEnabled, MDS_WHITE_LABEL_FEATURES } from 'dashboard/helper/mdsWhiteLabelFeatures';
 
 export default {
   components: { Banner },
@@ -34,6 +35,14 @@ export default {
       });
     },
     shouldShowBanner() {
+      if (
+        isMdsWhiteLabelFeatureEnabled(
+          MDS_WHITE_LABEL_FEATURES.HIDE_UPDATE_BANNER
+        )
+      ) {
+        return false;
+      }
+
       return (
         !this.userDismissedBanner &&
         this.globalConfig.displayManifest &&
