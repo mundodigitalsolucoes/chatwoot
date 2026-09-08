@@ -6,6 +6,10 @@ import { useI18n } from 'vue-i18n';
 import ButtonNext from 'next/button/Button.vue';
 import Icon from 'next/icon/Icon.vue';
 import Logo from 'next/icon/Logo.vue';
+import {
+  isMdsWhiteLabelFeatureEnabled,
+  MDS_WHITE_LABEL_FEATURES,
+} from 'dashboard/helper/mdsWhiteLabelFeatures';
 
 import {
   DropdownContainer,
@@ -30,6 +34,17 @@ const globalConfig = useMapGetter('globalConfig/get');
 
 const userAccounts = useMapGetter('getUserAccounts');
 
+const hideUpstreamLogo = computed(() =>
+  isMdsWhiteLabelFeatureEnabled(MDS_WHITE_LABEL_FEATURES.HIDE_CHATWOOT_LOGO)
+);
+
+const accountInitial = computed(() =>
+  String(currentAccount.value?.name || 'MDS')
+    .trim()
+    .charAt(0)
+    .toUpperCase()
+);
+
 const showAccountSwitcher = computed(
   () => userAccounts.value.length > 1 && currentAccount.value.name
 );
@@ -53,7 +68,7 @@ const emitNewAccount = () => {
 <template>
   <DropdownContainer>
     <template #trigger="{ toggle, isOpen }">
-      <!-- Collapsed view: Logo trigger -->
+      <!-- Collapsed view -->
       <button
         v-if="isCollapsed"
         class="grid flex-shrink-0 place-content-center p-2 rounded-lg cursor-pointer hover:bg-n-alpha-1"
@@ -61,7 +76,14 @@ const emitNewAccount = () => {
         :title="currentAccount.name"
         @click="toggle"
       >
-        <Logo class="size-7" />
+        <span
+          v-if="hideUpstreamLogo"
+          class="grid place-content-center size-7 rounded-md bg-n-alpha-2 text-xs font-semibold text-n-slate-12"
+          aria-hidden="true"
+        >
+          {{ accountInitial }}
+        </span>
+        <Logo v-else class="size-7" />
       </button>
       <!-- Expanded view: Account name trigger -->
       <button
