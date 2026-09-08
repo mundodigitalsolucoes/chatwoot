@@ -2,6 +2,10 @@ import { inject, provide, ref, computed } from 'vue';
 import { usePolicy } from 'dashboard/composables/usePolicy';
 import { useRouter } from 'vue-router';
 import { useUISettings } from 'dashboard/composables/useUISettings';
+import {
+  isMdsWhiteLabelFeatureEnabled,
+  MDS_WHITE_LABEL_FEATURES,
+} from 'dashboard/helper/mdsWhiteLabelFeatures';
 
 const SidebarControl = Symbol('SidebarControl');
 
@@ -138,7 +142,57 @@ export function useSidebarContext() {
     return router.resolve(to)?.meta?.installationTypes || [];
   };
 
+  const isHiddenByMdsWhiteLabel = to => {
+    if (!to) return false;
+
+    const resolved = router.resolve(to);
+    const path = String(resolved?.path || '').toLowerCase();
+    const routeName = String(
+      to.params?.navigationPath || resolved?.name || ''
+    ).toLowerCase();
+
+    if (
+      isMdsWhiteLabelFeatureEnabled(
+        MDS_WHITE_LABEL_FEATURES.HIDE_CAPTAIN_MENU
+      ) &&
+      (routeName.startsWith('captain_') || path.includes('/captain'))
+    ) {
+      return true;
+    }
+
+    if (
+      isMdsWhiteLabelFeatureEnabled(
+        MDS_WHITE_LABEL_FEATURES.HIDE_CAMPAIGNS_MENU
+      ) &&
+      (routeName.startsWith('campaigns_') || path.includes('/campaigns'))
+    ) {
+      return true;
+    }
+
+    if (
+      isMdsWhiteLabelFeatureEnabled(
+        MDS_WHITE_LABEL_FEATURES.HIDE_HELP_CENTER_MENU
+      ) &&
+      (routeName.startsWith('portals_') || path.includes('/portals'))
+    ) {
+      return true;
+    }
+
+    if (
+      isMdsWhiteLabelFeatureEnabled(
+        MDS_WHITE_LABEL_FEATURES.HIDE_SETTINGS_MENU
+      ) &&
+      path.includes('/settings/')
+    ) {
+      return true;
+    }
+
+    return false;
+  };
+
   const isAllowed = to => {
+    if (isHiddenByMdsWhiteLabel(to)) return false;
+
     const permissions = resolvePermissions(to);
     const featureFlag = resolveFeatureFlag(to);
     const installationType = resolveInstallationType(to);
