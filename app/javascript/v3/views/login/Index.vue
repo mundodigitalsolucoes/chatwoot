@@ -10,6 +10,7 @@ import SessionStorage from 'shared/helpers/sessionStorage';
 import { useBranding } from 'shared/composables/useBranding';
 import AnalyticsHelper from 'dashboard/helper/AnalyticsHelper';
 import { SESSION_EVENTS } from 'dashboard/helper/AnalyticsHelper/events';
+import { isMdsWhiteLabelModeEnabled } from 'dashboard/helper/mdsWhiteLabel';
 
 // components
 import SimpleDivider from '../../components/Divider/SimpleDivider.vue';
@@ -91,6 +92,9 @@ export default {
   },
   computed: {
     ...mapGetters({ globalConfig: 'globalConfig/get' }),
+    isMdsWhiteLabelMode() {
+      return isMdsWhiteLabelModeEnabled();
+    },
     allowedLoginMethods() {
       return window.chatwootConfig.allowedLoginMethods || ['email'];
     },
@@ -292,7 +296,7 @@ export default {
   <main
     class="flex flex-col w-full min-h-screen py-20 bg-n-brand/5 dark:bg-n-background sm:px-6 lg:px-8"
   >
-    <section class="max-w-5xl mx-auto">
+    <section v-if="!isMdsWhiteLabelMode" class="max-w-5xl mx-auto">
       <img
         :src="globalConfig.logo"
         :alt="globalConfig.installationName"
